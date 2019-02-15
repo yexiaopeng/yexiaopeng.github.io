@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>make-開發環境全能管家</title>
+      <link href="/2019/02/16/undefined/make-%E9%96%8B%E7%99%BC%E7%92%B0%E5%A2%83%E5%85%A8%E8%83%BD%E7%AE%A1%E5%AE%B6/"/>
+      <url>/2019/02/16/undefined/make-%E9%96%8B%E7%99%BC%E7%92%B0%E5%A2%83%E5%85%A8%E8%83%BD%E7%AE%A1%E5%AE%B6/</url>
+      
+        <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本文章爲閱讀學習李雲先生所著《專業嵌入式軟件開發》一書中關於Makefile的知識點總結，其中部分內容爲網絡所得。</p><h2 id="1-多目標"><a href="#1-多目標" class="headerlink" title="1-多目標"></a><font color="#00BA8B" size="6">1-多目標</font></h2><p>此處多目標指在同一個Makefile中有一個以上的同名目標(target)，如以下文件片段<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">all</span>:</span><br><span class="line">  <span class="variable">@echo</span> <span class="string">"============ start ================="</span></span><br><span class="line"></span><br><span class="line"><span class="attribute">BIN</span>:</span><br><span class="line">  gcc -o mian.o -c main.c</span><br><span class="line"></span><br><span class="line"><span class="attribute">DEP</span>:</span><br><span class="line"> gcc -E -MM mian.c &gt; main.dep</span><br><span class="line"></span><br><span class="line"><span class="attribute">all</span>: BIN</span><br><span class="line"></span><br><span class="line"><span class="attribute">all</span>: DEP</span><br><span class="line"></span><br><span class="line"><span class="attribute">all</span>:</span><br><span class="line">  <span class="variable">@echo</span> <span class="string">"============ ok ================="</span></span><br></pre></td></tr></table></figure></p><p>根據查閱的質料得出如下結論：<font color="red">在同一個Makefile文件內，當存在同名目標時，會對這些目標的依賴和命令進行處理。對於依賴，進行合併；對於命令，僅執行最後一個命令。</font><br>因此，上文的Makefile，使用 <font color="yellow">make</font> 或是 <font color="yellow">make all</font>執行時，等價與執行以下Makefile</p><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">all</span>: BIN DEP</span><br><span class="line">  <span class="variable">@echo</span> <span class="string">"============ ok ================="</span></span><br><span class="line"></span><br><span class="line"><span class="attribute">BIN</span>:</span><br><span class="line">  gcc -o mian.o -c main.c</span><br><span class="line"></span><br><span class="line"><span class="attribute">DEP</span>:</span><br><span class="line"> gcc -E -MM mian.c &gt; main.dep</span><br></pre></td></tr></table></figure><p>以上規則的作用當前發現的有如下幾點：</p><ul><li>在Makefile開頭位置寫一個空的目標，控制使用<font color="yellow">make</font>命令時的默認執行；</li><li>將依賴進行分解，使結構清晰；</li><li>最後的一個目標執行echo命令，作爲提示；</li></ul><h2 id="2-僞目標"><a href="#2-僞目標" class="headerlink" title="2-僞目標"></a><font color="#00BA8B" size="6">2-僞目標</font></h2><p>在Makefile中，默認將目標(target)作爲文件，以此假如當前文件目錄下存在與目標(target)同名的文件時，會對Makefile的正常執行趙成影響，因此需要使用僞目標這一概念。<br>僞目標採用關鍵字.PHONY進行定義，多個僞目標使用空格進行分割。</p><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"><span class="meta-keyword">.PHONY</span>: BIN DEP</span></span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 嵌入式 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 嵌入式 </tag>
+            
+            <tag> Makefile </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>起始之章</title>
+      <link href="/2019/02/16/undefined/%E8%B5%B7%E5%A7%8B%E4%B9%8B%E7%AB%A0/"/>
+      <url>/2019/02/16/undefined/%E8%B5%B7%E5%A7%8B%E4%B9%8B%E7%AB%A0/</url>
+      
+        <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>這是自己建立的博客，寫下自己的技術和感思。</p><h1 id="一"><a href="#一" class="headerlink" title="一"></a>一</h1><p>這是代碼<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">0</span>;</span><br></pre></td></tr></table></figure></p><h1 id="二"><a href="#二" class="headerlink" title="二"></a>二</h1>]]></content>
+      
+      
+      <categories>
+          
+          <category> 隨筆 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+  
+  
+</search>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="前言本文章爲閱讀學習李雲先生所著《專業嵌入式軟件開發》一書中關於Makefile的知識點總結，其中部分內容爲網絡所得。 1-多目標此處多目標指在同一個Makefile中有一個以上的同名目標(target)，如以下文件片段123456789101112131415all:  @echo &quot;============ start =================&quot;BIN:  gcc -o mian.o">
+<meta name="keywords" content="嵌入式,Makefile">
+<meta property="og:type" content="article">
+<meta property="og:title" content="make-開發環境全能管家">
+<meta property="og:url" content="http://yoursite.com/2019/02/16/undefined/make-開發環境全能管家/index.html">
+<meta property="og:site_name" content="真人-真話-真技術">
+<meta property="og:description" content="前言本文章爲閱讀學習李雲先生所著《專業嵌入式軟件開發》一書中關於Makefile的知識點總結，其中部分內容爲網絡所得。 1-多目標此處多目標指在同一個Makefile中有一個以上的同名目標(target)，如以下文件片段123456789101112131415all:  @echo &quot;============ start =================&quot;BIN:  gcc -o mian.o">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-02-15T17:39:17.974Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="make-開發環境全能管家">
+<meta name="twitter:description" content="前言本文章爲閱讀學習李雲先生所著《專業嵌入式軟件開發》一書中關於Makefile的知識點總結，其中部分內容爲網絡所得。 1-多目標此處多目標指在同一個Makefile中有一個以上的同名目標(target)，如以下文件片段123456789101112131415all:  @echo &quot;============ start =================&quot;BIN:  gcc -o mian.o">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>make-開發環境全能管家</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首頁</a></li>
+         
+          <li><a href="/archives/">文章</a></li>
+         
+          <li><a href="/categories/">分類</a></li>
+         
+          <li><a href="/tags/">標籤</a></li>
+         
+          <li><a href="/books/">書籍</a></li>
+         
+          <li><a href="/projects/">項目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2019/02/16/undefined/起始之章/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2019/02/16/undefined/make-開發環境全能管家/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2019/02/16/undefined/make-開發環境全能管家/&text=make-開發環境全能管家"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2019/02/16/undefined/make-開發環境全能管家/&title=make-開發環境全能管家"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2019/02/16/undefined/make-開發環境全能管家/&is_video=false&description=make-開發環境全能管家"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=make-開發環境全能管家&body=Check out this article: http://yoursite.com/2019/02/16/undefined/make-開發環境全能管家/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2019/02/16/undefined/make-開發環境全能管家/&title=make-開發環境全能管家"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2019/02/16/undefined/make-開發環境全能管家/&title=make-開發環境全能管家"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2019/02/16/undefined/make-開發環境全能管家/&title=make-開發環境全能管家"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2019/02/16/undefined/make-開發環境全能管家/&title=make-開發環境全能管家"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2019/02/16/undefined/make-開發環境全能管家/&name=make-開發環境全能管家&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-多目標"><span class="toc-number">1.1.</span> <span class="toc-text">1-多目標</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-僞目標"><span class="toc-number">1.2.</span> <span class="toc-text">2-僞目標</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope="" itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        make-開發環境全能管家
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+        <span itemprop="name">真人-真話-真技術</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-02-15T17:39:17.974Z" itemprop="datePublished">2019-02-16 01:39</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/嵌入式/">嵌入式</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Makefile/">Makefile</a>, <a class="tag-link" href="/tags/嵌入式/">嵌入式</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本文章爲閱讀學習李雲先生所著《專業嵌入式軟件開發》一書中關於Makefile的知識點總結，其中部分內容爲網絡所得。</p>
+<h2 id="1-多目標"><a href="#1-多目標" class="headerlink" title="1-多目標"></a><font color="#00BA8B" size="6">1-多目標</font></h2><p>此處多目標指在同一個Makefile中有一個以上的同名目標(target)，如以下文件片段<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">all</span>:</span><br><span class="line">  <span class="variable">@echo</span> <span class="string">"============ start ================="</span></span><br><span class="line"></span><br><span class="line"><span class="attribute">BIN</span>:</span><br><span class="line">  gcc -o mian.o -c main.c</span><br><span class="line"></span><br><span class="line"><span class="attribute">DEP</span>:</span><br><span class="line"> gcc -E -MM mian.c &gt; main.dep</span><br><span class="line"></span><br><span class="line"><span class="attribute">all</span>: BIN</span><br><span class="line"></span><br><span class="line"><span class="attribute">all</span>: DEP</span><br><span class="line"></span><br><span class="line"><span class="attribute">all</span>:</span><br><span class="line">  <span class="variable">@echo</span> <span class="string">"============ ok ================="</span></span><br></pre></td></tr></table></figure></p>
+<p>根據查閱的質料得出如下結論：<font color="red">在同一個Makefile文件內，當存在同名目標時，會對這些目標的依賴和命令進行處理。對於依賴，進行合併；對於命令，僅執行最後一個命令。</font><br>因此，上文的Makefile，使用 <font color="yellow">make</font> 或是 <font color="yellow">make all</font>執行時，等價與執行以下Makefile</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">all</span>: BIN DEP</span><br><span class="line">  <span class="variable">@echo</span> <span class="string">"============ ok ================="</span></span><br><span class="line"></span><br><span class="line"><span class="attribute">BIN</span>:</span><br><span class="line">  gcc -o mian.o -c main.c</span><br><span class="line"></span><br><span class="line"><span class="attribute">DEP</span>:</span><br><span class="line"> gcc -E -MM mian.c &gt; main.dep</span><br></pre></td></tr></table></figure>
+<p>以上規則的作用當前發現的有如下幾點：</p>
+<ul>
+<li>在Makefile開頭位置寫一個空的目標，控制使用<font color="yellow">make</font>命令時的默認執行；</li>
+<li>將依賴進行分解，使結構清晰；</li>
+<li>最後的一個目標執行echo命令，作爲提示；</li>
+</ul>
+<h2 id="2-僞目標"><a href="#2-僞目標" class="headerlink" title="2-僞目標"></a><font color="#00BA8B" size="6">2-僞目標</font></h2><p>在Makefile中，默認將目標(target)作爲文件，以此假如當前文件目錄下存在與目標(target)同名的文件時，會對Makefile的正常執行趙成影響，因此需要使用僞目標這一概念。<br>僞目標採用關鍵字.PHONY進行定義，多個僞目標使用空格進行分割。</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"><span class="meta-keyword">.PHONY</span>: BIN DEP</span></span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首頁</a></li>
+         
+          <li><a href="/archives/">文章</a></li>
+         
+          <li><a href="/categories/">分類</a></li>
+         
+          <li><a href="/tags/">標籤</a></li>
+         
+          <li><a href="/books/">書籍</a></li>
+         
+          <li><a href="/projects/">項目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-多目標"><span class="toc-number">1.1.</span> <span class="toc-text">1-多目標</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-僞目標"><span class="toc-number">1.2.</span> <span class="toc-text">2-僞目標</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2019/02/16/undefined/make-開發環境全能管家/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2019/02/16/undefined/make-開發環境全能管家/&text=make-開發環境全能管家"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2019/02/16/undefined/make-開發環境全能管家/&title=make-開發環境全能管家"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2019/02/16/undefined/make-開發環境全能管家/&is_video=false&description=make-開發環境全能管家"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=make-開發環境全能管家&body=Check out this article: http://yoursite.com/2019/02/16/undefined/make-開發環境全能管家/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2019/02/16/undefined/make-開發環境全能管家/&title=make-開發環境全能管家"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2019/02/16/undefined/make-開發環境全能管家/&title=make-開發環境全能管家"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2019/02/16/undefined/make-開發環境全能管家/&title=make-開發環境全能管家"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2019/02/16/undefined/make-開發環境全能管家/&title=make-開發環境全能管家"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2019/02/16/undefined/make-開發環境全能管家/&name=make-開發環境全能管家&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 Ye xiaopeng
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首頁</a></li>
+         
+          <li><a href="/archives/">文章</a></li>
+         
+          <li><a href="/categories/">分類</a></li>
+         
+          <li><a href="/tags/">標籤</a></li>
+         
+          <li><a href="/books/">書籍</a></li>
+         
+          <li><a href="/projects/">項目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
